@@ -3,10 +3,10 @@ import styled from "styled-components";
 export const StyledWrapper = styled.article`
   margin: 0;
   padding: 0;
-  display: flex;
-  flex-direction: column;
-  width: 200vw;
-  height: 100vw;
+  display: grid;
+  grid-template-rows: auto auto;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
   `;
 
@@ -14,7 +14,9 @@ export const StyledHead = styled.p`
   margin: 0;
   padding: 0;
   font-weight: bold;
-  display: flex;
+  display: grid;
+  grid-template-columns: 50px 100px 550px auto;
+  width: 100%;
   gap: 5px;
   span:nth-child(1) {
     width: 50px;
@@ -36,11 +38,14 @@ export const StyledList = styled.ul`
   padding: 0;
   display: flex;
   flex-direction: column;
+  height: 100vh;
+  min-height: 0;
   overflow: scroll;
   `;
 
 export const StyledItem = styled.li`
-  display: flex;
+  display: grid;
+  grid-template-columns: 50px 100px 550px auto;
   gap: 5px;
   span.test {
     background-color: blue;

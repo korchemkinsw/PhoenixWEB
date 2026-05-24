@@ -1,20 +1,32 @@
 from rest_framework import serializers
-from .models import Company, Panel
+from .models import Company, Groups, Panel
 
+class ListGroupsForCompanySerializer(serializers.ModelSerializer):
+  class Meta:
+    model = Groups
+    fields = ('group_field', 'message', 'disabled')
+    
 class ListCompanySerializer(serializers.ModelSerializer):
   panel = serializers.SerializerMethodField()
   test = serializers.SerializerMethodField()
   disabled = serializers.SerializerMethodField()
+  groups = serializers.SerializerMethodField()
 
   def get_panel(self, obj):
-     return obj.company_id.split('#', 1)[0]
+    return obj.company_id.split('#', 1)[0]
   
   def get_test(self, obj):
-     return Panel.objects.get(panel_id = obj.company_id.split('#', 1)[0]).testpanel
+    return Panel.objects.get(panel_id = obj.company_id.split('#', 1)[0]).testpanel
   
   def get_disabled(self, obj):
-     return Panel.objects.get(panel_id = obj.company_id.split('#', 1)[0]).disabled
+    return Panel.objects.get(panel_id = obj.company_id.split('#', 1)[0]).disabled
+
+  def get_groups(self, obj):
+    if Groups.objects.count():
+      groups = Groups.objects.filter(company = obj.company_id)
+      return ListGroupsForCompanySerializer(groups, many=True).data
+    return []
 
   class Meta:
-      model = Company
-      fields = ('panel', 'test', 'disabled', 'companyname', 'address')
+    model = Company
+    fields = ('company_id', 'panel', 'test', 'disabled', 'companyname', 'address', 'groups')
