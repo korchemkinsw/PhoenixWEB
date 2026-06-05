@@ -8,13 +8,15 @@ import { company } from "/src/mocks/company-list";
 export default function App() {
   const [error, setError] = useState(null);
   const [companyList, setList] = useState([]);
+  companyList && console.log(companyList.length)
   //useEffect(() => {api.getData(api.BackUrl.company, 'company', setList, setError)}, []);
   useEffect(() => {
-    fetch('http://127.0.0.1:8000//phoenix/company')
+    fetch('http://127.0.0.1:8000/phoenix/company')
       .then((res) => {
         return res.json();
       })
       .then((data) => {
+        console.log(data.length)
         setList(data);
       });
     }, [])

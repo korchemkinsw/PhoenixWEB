@@ -40,8 +40,7 @@ class Advancesearchtemplates(models.Model):
 
 
 class Alarmeventforcomputers(models.Model):
-    pk = models.CompositePrimaryKey('Event_id', 'ComputerName')
-    event = models.ForeignKey('Temp', models.DO_NOTHING, db_column='Event_id')  # Field name made lowercase.
+    event = models.OneToOneField('Temp', models.DO_NOTHING, db_column='Event_id', primary_key=True)  # Field name made lowercase. The composite primary key (Event_id, ComputerName) found, that is not supported. The first column is selected.
     computername = models.CharField(db_column='ComputerName', max_length=70)  # Field name made lowercase.
 
     class Meta:
@@ -208,9 +207,8 @@ class Channels(models.Model):
 
 
 class ChannelsChannelno(models.Model):
-    pk = models.CompositePrimaryKey('ChannelNo', 'VPN_id')
     channel = models.OneToOneField(Channels, models.DO_NOTHING)
-    channelno = models.CharField(db_column='ChannelNo', max_length=15)  # Field name made lowercase.
+    channelno = models.CharField(db_column='ChannelNo', primary_key=True, max_length=15)  # Field name made lowercase. The composite primary key (ChannelNo, VPN_id) found, that is not supported. The first column is selected.
     channelnoforstate = models.CharField(db_column='ChannelNoForState', max_length=15)  # Field name made lowercase.
     vpn_id = models.IntegerField(db_column='VPN_id')  # Field name made lowercase.
 
@@ -237,9 +235,8 @@ class Clientdata(models.Model):
 
 
 class Clientsettings(models.Model):
-    pk = models.CompositePrimaryKey('IdTCode', 'ComputerName')
     computername = models.CharField(db_column='ComputerName', max_length=70)  # Field name made lowercase.
-    idtcode = models.IntegerField(db_column='IdTCode')  # Field name made lowercase.
+    idtcode = models.IntegerField(db_column='IdTCode', primary_key=True)  # Field name made lowercase. The composite primary key (IdTCode, ComputerName) found, that is not supported. The first column is selected.
 
     class Meta:
         managed = False
@@ -248,8 +245,7 @@ class Clientsettings(models.Model):
 
 
 class Code(models.Model):
-    pk = models.CompositePrimaryKey('Code', 'CodeGroup')
-    code = models.CharField(db_column='Code', max_length=6)  # Field name made lowercase.
+    code = models.CharField(db_column='Code', primary_key=True, max_length=6)  # Field name made lowercase. The composite primary key (Code, CodeGroup) found, that is not supported. The first column is selected.
     codegroup = models.SmallIntegerField(db_column='CodeGroup')  # Field name made lowercase.
     message = models.CharField(db_column='Message', max_length=500, blank=True, null=True)  # Field name made lowercase.
     autoreset = models.BooleanField(db_column='AutoReset', blank=True, null=True)  # Field name made lowercase.
@@ -285,14 +281,13 @@ class Company(models.Model):
     customerid = models.ForeignKey('Customers', models.DO_NOTHING, db_column='CustomerID', blank=True, null=True, db_comment='Customers.ID')  # Field name made lowercase.
 
     class Meta:
-        #managed = False
+        managed = False
         db_table = 'Company'
         db_table_comment = 'Плательщик'
 
 
 class CompanyContracts(models.Model):
-    pk = models.CompositePrimaryKey('Contract_id', 'company_id')
-    contract = models.ForeignKey('Contracts', models.DO_NOTHING, db_column='Contract_id', db_comment='Contracts.Contract_id')  # Field name made lowercase.
+    contract = models.OneToOneField('Contracts', models.DO_NOTHING, db_column='Contract_id', primary_key=True, db_comment='Contracts.Contract_id')  # Field name made lowercase. The composite primary key (Contract_id, company_id) found, that is not supported. The first column is selected.
     contractrent = models.CharField(db_column='ContractRent', max_length=500, blank=True, null=True, db_comment='Оборудование в аренде')  # Field name made lowercase.
     company = models.ForeignKey(Company, models.DO_NOTHING, db_comment='Company.company_id')
     remarks = models.CharField(db_column='Remarks', max_length=1000, blank=True, null=True, db_comment='Примечания')  # Field name made lowercase.
@@ -335,9 +330,8 @@ class Contactidemulationsetting(models.Model):
 
 
 class Contactideventsfilterbypults(models.Model):
-    pk = models.CompositePrimaryKey('ContactIDSettingID', 'PultID')
     id = models.AutoField(db_column='ID')  # Field name made lowercase.
-    contactidsettingid = models.ForeignKey(Contactidemulationsetting, models.DO_NOTHING, db_column='ContactIDSettingID')  # Field name made lowercase.
+    contactidsettingid = models.OneToOneField(Contactidemulationsetting, models.DO_NOTHING, db_column='ContactIDSettingID', primary_key=True)  # Field name made lowercase. The composite primary key (ContactIDSettingID, PultID) found, that is not supported. The first column is selected.
     pultid = models.ForeignKey('Pults', models.DO_NOTHING, db_column='PultID')  # Field name made lowercase.
 
     class Meta:
@@ -357,9 +351,8 @@ class Contactidphoenixcodes(models.Model):
 
 
 class Contactidviacomevents(models.Model):
-    pk = models.CompositePrimaryKey('EventID', 'ComputerName', 'COMPort')
     id = models.AutoField(db_column='ID')  # Field name made lowercase.
-    eventid = models.IntegerField(db_column='EventID')  # Field name made lowercase.
+    eventid = models.IntegerField(db_column='EventID', primary_key=True)  # Field name made lowercase. The composite primary key (EventID, ComputerName, COMPort) found, that is not supported. The first column is selected.
     contactidpacket = models.CharField(db_column='ContactIDPacket', max_length=7000)  # Field name made lowercase.
     computername = models.CharField(db_column='ComputerName', max_length=50)  # Field name made lowercase.
     comport = models.CharField(db_column='COMPort', max_length=50)  # Field name made lowercase.
@@ -373,9 +366,8 @@ class Contactidviacomevents(models.Model):
 
 
 class Contactidviatcpevents(models.Model):
-    pk = models.CompositePrimaryKey('EventID', 'ComputerName', 'IP', 'Port')
     id = models.AutoField(db_column='ID')  # Field name made lowercase.
-    eventid = models.IntegerField(db_column='EventID')  # Field name made lowercase.
+    eventid = models.IntegerField(db_column='EventID', primary_key=True)  # Field name made lowercase. The composite primary key (EventID, ComputerName, IP, Port) found, that is not supported. The first column is selected.
     contactidpacket = models.CharField(db_column='ContactIDPacket', max_length=7000)  # Field name made lowercase.
     computername = models.CharField(db_column='ComputerName', max_length=50)  # Field name made lowercase.
     ip = models.CharField(db_column='IP', max_length=50)  # Field name made lowercase.
@@ -447,8 +439,7 @@ class Customers(models.Model):
 
 
 class Databaseversion(models.Model):
-    pk = models.CompositePrimaryKey('version', 'versionDate')
-    version = models.IntegerField()
+    version = models.IntegerField(primary_key=True)  # The composite primary key (version, versionDate) found, that is not supported. The first column is selected.
     versiondate = models.DateTimeField(db_column='versionDate')  # Field name made lowercase.
 
     class Meta:
@@ -482,8 +473,7 @@ class Dictentattrval(models.Model):
 
 
 class Engineersphmk(models.Model):
-    pk = models.CompositePrimaryKey('engineer_id', 'userGrId')
-    engineer = models.ForeignKey('Engineers', models.DO_NOTHING)
+    engineer = models.OneToOneField('Engineers', models.DO_NOTHING, primary_key=True)  # The composite primary key (engineer_id, userGrId) found, that is not supported. The first column is selected.
     usergrid = models.ForeignKey('MobileuserGroups', models.DO_NOTHING, db_column='userGrId', to_field='userGrId')  # Field name made lowercase.
 
     class Meta:
@@ -667,8 +657,7 @@ class Groupresponse(models.Model):
 
 
 class Groupresponsealter(models.Model):
-    pk = models.CompositePrimaryKey('GroupResponse_id', 'GroupResponseAlter_id')
-    groupresponse_id = models.IntegerField(db_column='GroupResponse_id')  # Field name made lowercase.
+    groupresponse_id = models.IntegerField(db_column='GroupResponse_id', primary_key=True)  # Field name made lowercase. The composite primary key (GroupResponse_id, GroupResponseAlter_id) found, that is not supported. The first column is selected.
     groupresponsealter_id = models.IntegerField(db_column='GroupResponseAlter_id')  # Field name made lowercase.
 
     class Meta:
@@ -713,9 +702,8 @@ class Groupresponsegeozone(models.Model):
 
 
 class GroupresponseGroup(models.Model):
-    pk = models.CompositePrimaryKey('Group_id', 'Panel_id', 'group_')
     id = models.AutoField(db_comment='ID')
-    group_id = models.IntegerField(db_column='Group_id', db_comment='GroupResponse.Group_id')  # Field name made lowercase.
+    group_id = models.IntegerField(db_column='Group_id', primary_key=True, db_comment='GroupResponse.Group_id')  # Field name made lowercase. The composite primary key (Group_id, Panel_id, group_) found, that is not supported. The first column is selected.
     panel = models.ForeignKey('Groups', models.DO_NOTHING, db_column='Panel_id', db_comment='Groups.Panel_id')  # Field name made lowercase.
     group_field = models.ForeignKey('Groups', models.DO_NOTHING, db_column='group_', related_name='groupresponsegroup_group_field_set', db_comment='Groups.Group_')  # Field renamed because it ended with '_'.
     starttime = models.DateTimeField(db_column='StartTime', blank=True, null=True, db_comment='Начало работы')  # Field name made lowercase.
@@ -769,8 +757,7 @@ class GroupSmsCodeZones(models.Model):
 
 
 class Groups(models.Model):
-    pk = models.CompositePrimaryKey('Panel_id', 'Group_')
-    panel = models.ForeignKey('Panel', models.DO_NOTHING, db_column='Panel_id', db_comment='Panel.Panel_id')  # Field name made lowercase.
+    panel = models.OneToOneField('Panel', models.DO_NOTHING, db_column='Panel_id', primary_key=True, db_comment='Panel.Panel_id')  # Field name made lowercase. The composite primary key (Panel_id, Group_) found, that is not supported. The first column is selected.
     group_field = models.IntegerField(db_column='Group_', db_comment='Номер')  # Field name made lowercase. Field renamed because it ended with '_'.
     message = models.CharField(db_column='Message', max_length=100, db_comment='Описание')  # Field name made lowercase.
     isopen = models.BooleanField(db_column='IsOpen', blank=True, null=True, db_comment='Группа под охраной: 0 - да; 1 ')  # Field name made lowercase.
@@ -1107,8 +1094,7 @@ class Marktypes(models.Model):
 
 
 class Marks(models.Model):
-    pk = models.CompositePrimaryKey('Panel_id', 'group_', 'Mark_Type_id')
-    panel = models.ForeignKey(Groups, models.DO_NOTHING, db_column='Panel_id', db_comment='Groups.Panel_id')  # Field name made lowercase.
+    panel = models.OneToOneField(Groups, models.DO_NOTHING, db_column='Panel_id', primary_key=True, db_comment='Groups.Panel_id')  # Field name made lowercase. The composite primary key (Panel_id, group_, Mark_Type_id) found, that is not supported. The first column is selected.
     group_field = models.ForeignKey(Groups, models.DO_NOTHING, db_column='group_', related_name='marks_group_field_set', db_comment='Groups.Group_')  # Field renamed because it ended with '_'.
     mark_message = models.CharField(db_column='Mark_Message', max_length=200, db_comment='?')  # Field name made lowercase.
     mark_date = models.DateTimeField(db_column='Mark_Date', db_comment='?')  # Field name made lowercase.
@@ -1135,8 +1121,7 @@ class Masters(models.Model):
 
 
 class Mobileevents(models.Model):
-    pk = models.CompositePrimaryKey('archiveId', 'userId')
-    archiveid = models.IntegerField(db_column='archiveId')  # Field name made lowercase.
+    archiveid = models.IntegerField(db_column='archiveId', primary_key=True)  # Field name made lowercase. The composite primary key (archiveId, userId) found, that is not supported. The first column is selected.
     userid = models.ForeignKey('Mobileuser', models.DO_NOTHING, db_column='userId')  # Field name made lowercase.
     panel = models.CharField(max_length=16)
     group = models.IntegerField()
@@ -1238,8 +1223,7 @@ class Mobileuserrole(models.Model):
 
 
 class Mobileusersubscribe(models.Model):
-    pk = models.CompositePrimaryKey('userGrId', 'typeCodeId')
-    usergrid = models.ForeignKey('MobileuserGroups', models.DO_NOTHING, db_column='userGrId', to_field='userGrId')  # Field name made lowercase.
+    usergrid = models.OneToOneField('MobileuserGroups', models.DO_NOTHING, db_column='userGrId', primary_key=True)  # Field name made lowercase. The composite primary key (userGrId, typeCodeId) found, that is not supported. The first column is selected.
     typecodeid = models.ForeignKey('Typecode', models.DO_NOTHING, db_column='typeCodeId')  # Field name made lowercase.
 
     class Meta:
@@ -1249,9 +1233,8 @@ class Mobileusersubscribe(models.Model):
 
 
 class MobileuserGroups(models.Model):
-    pk = models.CompositePrimaryKey('userId', 'panelId', 'group')
     usergrid = models.AutoField(db_column='userGrId', unique=True)  # Field name made lowercase.
-    userid = models.ForeignKey(Mobileuser, models.DO_NOTHING, db_column='userId')  # Field name made lowercase.
+    userid = models.OneToOneField(Mobileuser, models.DO_NOTHING, db_column='userId', primary_key=True)  # Field name made lowercase. The composite primary key (userId, panelId, group) found, that is not supported. The first column is selected.
     panelid = models.ForeignKey(Groups, models.DO_NOTHING, db_column='panelId')  # Field name made lowercase.
     group = models.ForeignKey(Groups, models.DO_NOTHING, db_column='group', related_name='mobileusergroups_group_set')
 
@@ -1319,9 +1302,8 @@ class Objschedule(models.Model):
 
 
 class Objectaddinfo(models.Model):
-    pk = models.CompositePrimaryKey('PanelID', 'GroupID', 'AttributeID')
     objectaddinfoid = models.AutoField(db_column='ObjectAddInfoID')  # Field name made lowercase.
-    panelid = models.ForeignKey(Groups, models.DO_NOTHING, db_column='PanelID')  # Field name made lowercase.
+    panelid = models.OneToOneField(Groups, models.DO_NOTHING, db_column='PanelID', primary_key=True)  # Field name made lowercase. The composite primary key (PanelID, GroupID, AttributeID) found, that is not supported. The first column is selected.
     groupid = models.ForeignKey(Groups, models.DO_NOTHING, db_column='GroupID', related_name='objectaddinfo_groupid_set')  # Field name made lowercase.
     attributeid = models.ForeignKey(Dictentattrval, models.DO_NOTHING, db_column='AttributeID')  # Field name made lowercase.
     valueid = models.ForeignKey(Dictentattrval, models.DO_NOTHING, db_column='ValueID', related_name='objectaddinfo_valueid_set', blank=True, null=True)  # Field name made lowercase.
@@ -1443,8 +1425,7 @@ class Orlanbuses(models.Model):
 
 
 class Orlanchecking(models.Model):
-    pk = models.CompositePrimaryKey('BusNumber_From', 'OrlanNumber_From', 'BusNumber_To', 'OrlanNumber_To')
-    busnumber_from = models.ForeignKey('Orlanlist', models.DO_NOTHING, db_column='BusNumber_From', to_field='OrlanNumber')  # Field name made lowercase.
+    busnumber_from = models.OneToOneField('Orlanlist', models.DO_NOTHING, db_column='BusNumber_From', primary_key=True)  # Field name made lowercase. The composite primary key (BusNumber_From, OrlanNumber_From, BusNumber_To, OrlanNumber_To) found, that is not supported. The first column is selected.
     orlannumber_from = models.ForeignKey('Orlanlist', models.DO_NOTHING, db_column='OrlanNumber_From', to_field='OrlanNumber', related_name='orlanchecking_orlannumber_from_set')  # Field name made lowercase.
     busnumber_to = models.ForeignKey('Orlanlist', models.DO_NOTHING, db_column='BusNumber_To', to_field='OrlanNumber', related_name='orlanchecking_busnumber_to_set')  # Field name made lowercase.
     orlannumber_to = models.ForeignKey('Orlanlist', models.DO_NOTHING, db_column='OrlanNumber_To', to_field='OrlanNumber', related_name='orlanchecking_orlannumber_to_set')  # Field name made lowercase.
@@ -1457,8 +1438,7 @@ class Orlanchecking(models.Model):
 
 
 class Orlangprslist(models.Model):
-    pk = models.CompositePrimaryKey('PairNumber', 'OrlanNumber')
-    pairnumber = models.SmallIntegerField(db_column='PairNumber')  # Field name made lowercase.
+    pairnumber = models.SmallIntegerField(db_column='PairNumber', primary_key=True)  # Field name made lowercase. The composite primary key (PairNumber, OrlanNumber) found, that is not supported. The first column is selected.
     orlannumber = models.SmallIntegerField(db_column='OrlanNumber')  # Field name made lowercase.
     vpnname = models.CharField(db_column='VPNName', max_length=50, blank=True, null=True)  # Field name made lowercase.
     ip = models.CharField(db_column='IP', max_length=15, blank=True, null=True)  # Field name made lowercase.
@@ -1486,8 +1466,7 @@ class Orlangprslist(models.Model):
 
 
 class Orlanlist(models.Model):
-    pk = models.CompositePrimaryKey('BusNumber', 'OrlanNumber')
-    busnumber = models.SmallIntegerField(db_column='BusNumber')  # Field name made lowercase.
+    busnumber = models.SmallIntegerField(db_column='BusNumber', primary_key=True)  # Field name made lowercase. The composite primary key (BusNumber, OrlanNumber) found, that is not supported. The first column is selected.
     orlannumber = models.SmallIntegerField(db_column='OrlanNumber')  # Field name made lowercase.
     mobileno = models.CharField(db_column='MobileNo', unique=True, max_length=15)  # Field name made lowercase.
     mobileforstate = models.CharField(db_column='MobileForState', unique=True, max_length=15)  # Field name made lowercase.
@@ -1541,8 +1520,7 @@ class Panel(models.Model):
 
 
 class PanelTracking(models.Model):
-    pk = models.CompositePrimaryKey('Panel_id', 'Tracking_id')
-    panel = models.ForeignKey(Panel, models.DO_NOTHING, db_column='Panel_id', db_comment='Panel.Panel_id')  # Field name made lowercase.
+    panel = models.OneToOneField(Panel, models.DO_NOTHING, db_column='Panel_id', primary_key=True, db_comment='Panel.Panel_id')  # Field name made lowercase. The composite primary key (Panel_id, Tracking_id) found, that is not supported. The first column is selected.
     tracking = models.ForeignKey('Tracking', models.DO_NOTHING, db_column='Tracking_id', db_comment='Tracking.Tracking_id')  # Field name made lowercase.
     trackingdate = models.DateTimeField(db_column='TrackingDate', blank=True, null=True, db_comment='Дата')  # Field name made lowercase.
     trackidpostponed = models.IntegerField(db_column='TrackIdPostponed')  # Field name made lowercase.
@@ -1555,9 +1533,8 @@ class PanelTracking(models.Model):
 
 
 class Personpermitongrrespcategory(models.Model):
-    pk = models.CompositePrimaryKey('Person_ID', 'GroupRespCategory_ID')
     id = models.AutoField(db_column='ID')  # Field name made lowercase.
-    person = models.ForeignKey('Personal', models.DO_NOTHING, db_column='Person_ID')  # Field name made lowercase.
+    person = models.OneToOneField('Personal', models.DO_NOTHING, db_column='Person_ID', primary_key=True)  # Field name made lowercase. The composite primary key (Person_ID, GroupRespCategory_ID) found, that is not supported. The first column is selected.
     grouprespcategory = models.ForeignKey(Groupresponsecategory, models.DO_NOTHING, db_column='GroupRespCategory_ID')  # Field name made lowercase.
 
     class Meta:
@@ -1783,8 +1760,7 @@ class Responsibletel(models.Model):
 
 
 class Responsibleteldescription(models.Model):
-    pk = models.CompositePrimaryKey('Responsible_id', 'ResponsibleTel_id')
-    responsible = models.ForeignKey('Responsibles', models.DO_NOTHING, db_column='Responsible_id')  # Field name made lowercase.
+    responsible = models.OneToOneField('Responsibles', models.DO_NOTHING, db_column='Responsible_id', primary_key=True)  # Field name made lowercase. The composite primary key (Responsible_id, ResponsibleTel_id) found, that is not supported. The first column is selected.
     responsibletel = models.ForeignKey(Responsibletel, models.DO_NOTHING, db_column='ResponsibleTel_id')  # Field name made lowercase.
     description = models.CharField(db_column='Description', max_length=100, blank=True, null=True)  # Field name made lowercase.
     firealarm = models.BooleanField(db_column='FireAlarm', blank=True, null=True)  # Field name made lowercase.
@@ -2054,8 +2030,7 @@ class Typedevices(models.Model):
 
 
 class Users(models.Model):
-    pk = models.CompositePrimaryKey('Panel_id', 'Group_', 'UserCode')
-    panel = models.ForeignKey(Groups, models.DO_NOTHING, db_column='Panel_id', db_comment='Groups.Panel_id')  # Field name made lowercase.
+    panel = models.OneToOneField(Groups, models.DO_NOTHING, db_column='Panel_id', primary_key=True, db_comment='Groups.Panel_id')  # Field name made lowercase. The composite primary key (Panel_id, Group_, UserCode) found, that is not supported. The first column is selected.
     group_field = models.ForeignKey(Groups, models.DO_NOTHING, db_column='Group_', related_name='users_group_field_set', db_comment='Groups.Group_')  # Field name made lowercase. Field renamed because it ended with '_'.
     usercode = models.IntegerField(db_column='UserCode', db_comment='Номер кода доступа')  # Field name made lowercase.
     username = models.CharField(db_column='UserName', max_length=200, blank=True, null=True, db_comment='Ф.И.О. владельца кода доступа')  # Field name made lowercase.
@@ -2077,8 +2052,7 @@ class Vpns(models.Model):
 
 
 class Videozones(models.Model):
-    pk = models.CompositePrimaryKey('Panel_id', 'VideoZone', 'Group_')
-    panel_id = models.CharField(db_column='Panel_id', max_length=15)  # Field name made lowercase.
+    panel_id = models.CharField(db_column='Panel_id', primary_key=True, max_length=15)  # Field name made lowercase. The composite primary key (Panel_id, VideoZone, Group_) found, that is not supported. The first column is selected.
     videozone = models.IntegerField(db_column='VideoZone')  # Field name made lowercase.
     group_field = models.IntegerField(db_column='Group_')  # Field name made lowercase. Field renamed because it ended with '_'.
     message = models.CharField(db_column='Message', max_length=250, blank=True, null=True)  # Field name made lowercase.
@@ -2110,8 +2084,7 @@ class Voicerequests(models.Model):
 
 
 class Z8Checking(models.Model):
-    pk = models.CompositePrimaryKey('Panel_id', 'Group_')
-    panel_id = models.CharField(db_column='Panel_id', max_length=15)  # Field name made lowercase.
+    panel_id = models.CharField(db_column='Panel_id', primary_key=True, max_length=15)  # Field name made lowercase. The composite primary key (Panel_id, Group_) found, that is not supported. The first column is selected.
     group_field = models.IntegerField(db_column='Group_')  # Field name made lowercase. Field renamed because it ended with '_'.
     timeevent = models.DateTimeField(db_column='TimeEvent', blank=True, null=True)  # Field name made lowercase.
     timeend = models.DateTimeField(db_column='TimeEnd', blank=True, null=True)  # Field name made lowercase.
@@ -2124,8 +2097,7 @@ class Z8Checking(models.Model):
 
 
 class Zones(models.Model):
-    pk = models.CompositePrimaryKey('Panel_id', 'Zone', 'Group_')
-    panel = models.ForeignKey(Groups, models.DO_NOTHING, db_column='Panel_id', db_comment='Groups.Panel_id')  # Field name made lowercase.
+    panel = models.OneToOneField(Groups, models.DO_NOTHING, db_column='Panel_id', primary_key=True, db_comment='Groups.Panel_id')  # Field name made lowercase. The composite primary key (Panel_id, Zone, Group_) found, that is not supported. The first column is selected.
     zone = models.IntegerField(db_column='Zone', db_comment='Номер')  # Field name made lowercase.
     group_field = models.ForeignKey(Groups, models.DO_NOTHING, db_column='Group_', related_name='zones_group_field_set', db_comment='Groups.Group_')  # Field name made lowercase. Field renamed because it ended with '_'.
     message = models.CharField(db_column='Message', max_length=250, blank=True, null=True, db_comment='Описание шлейфа')  # Field name made lowercase.
@@ -2146,8 +2118,7 @@ class Zones(models.Model):
 
 
 class ZonesGroupresponse(models.Model):
-    pk = models.CompositePrimaryKey('Group_id', 'Zone')
-    group = models.ForeignKey(Groupresponse, models.DO_NOTHING, db_column='Group_id', db_comment='GroupResponse.Group_id')  # Field name made lowercase.
+    group = models.OneToOneField(Groupresponse, models.DO_NOTHING, db_column='Group_id', primary_key=True, db_comment='GroupResponse.Group_id')  # Field name made lowercase. The composite primary key (Group_id, Zone) found, that is not supported. The first column is selected.
     zone = models.IntegerField(db_column='Zone', db_comment='Номер шлейфа')  # Field name made lowercase.
     message = models.CharField(db_column='Message', max_length=250, blank=True, null=True, db_comment='Описание шлейфа')  # Field name made lowercase.
     status = models.IntegerField(db_column='Status', blank=True, null=True, db_comment='Состояние шлейфа: 1 - норма; 2')  # Field name made lowercase.
@@ -2204,8 +2175,7 @@ class AndroidDeviceLink(models.Model):
 
 
 class AndroidGpsRedirect(models.Model):
-    pk = models.CompositePrimaryKey('event_id', 'device_id')
-    event_id = models.IntegerField()
+    event_id = models.IntegerField(primary_key=True)  # The composite primary key (event_id, device_id) found, that is not supported. The first column is selected.
     device = models.ForeignKey(AndroidDevice, models.DO_NOTHING)
 
     class Meta:
@@ -2258,8 +2228,6 @@ class AndroidVersion(models.Model):
 
 
 class Dtproperties(models.Model):
-    pk = models.CompositePrimaryKey('id', 'property')
-    id = models.AutoField()
     objectid = models.IntegerField(blank=True, null=True)
     property = models.CharField(max_length=64)
     value = models.CharField(max_length=255, blank=True, null=True)

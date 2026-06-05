@@ -1,7 +1,7 @@
-from django.urls import path
-
-from .views import ListCompany
+from django.contrib import admin
+from django.urls import include, path
 
 urlpatterns = [
-    path("company", ListCompany.as_view(), name="company"),
+    path('admin/', admin.site.urls),
+    path('phoenix/', include('pult4db.urls')),
 ]

@@ -11,7 +11,6 @@ export default function CompanyListPage ({company}) {
   //selectedCompany && api.getData(api.BackUrl.company+"/"+selectedCompany, 'groups', setList, setError)
   return (
     <StyledWrapper>
-      {console.log(selectedCompany)}
       <StyledHead>
         <span>Status</span>
         <span>ID</span>
