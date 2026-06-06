@@ -22,7 +22,7 @@ export const StyledHead = styled.p`
     width: 50px;
     overflow: hidden;
     }
-  span:nth-child(2) {
+  a:nth-child(2) {
     width: 100px;
     overflow: hidden;
     }
@@ -60,10 +60,13 @@ export const StyledItem = styled.li`
   span:nth-child(2) {
     width: 100px;
     overflow: hidden;
+    cursor: pointer;
     }
-  span:nth-child(3) {
+  a:nth-child(3) {
     width: 550px;
     overflow: hidden;
+    text-decoration: none;
+    color: inherit;
     }
   span:nth-child(4) {
     width: 100%;

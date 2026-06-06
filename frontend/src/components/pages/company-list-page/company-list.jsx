@@ -22,13 +22,16 @@ export default function CompanyListPage ({company}) {
           company && 
           company.length &&
           company.map((item, index) => (
-            <StyledItem key={index} onClick={() => (
-              item.company_id === selectedCompany ? setCompany(""):setCompany(item.company_id)
-            )
-              }>
+            <StyledItem key={index} >
               <span className={item.test ? "test" : item.disabled ? "disabled" : "act"}>  </span>
-              <span>{item.panel}</span>
-              <span>{item.companyname}</span>
+              <span onClick={() => (
+              item.company_id === selectedCompany ? setCompany(""):setCompany(item.company_id)
+              )}>
+                {item.panel}
+              </span>
+              <a href={`/company/${item.company_id.replace('#',"&")}`} >
+                {item.companyname}
+              </a>
               <span>{item.address}</span>
               {
                 item.company_id === selectedCompany && 

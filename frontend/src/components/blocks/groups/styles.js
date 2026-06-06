@@ -15,5 +15,5 @@ export const StyledItem = styled.li`
   gap: 5px;
   span.disabled {
     background-color: red;
-    }
+    };
   `

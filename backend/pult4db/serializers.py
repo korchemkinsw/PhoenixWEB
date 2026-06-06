@@ -30,3 +30,26 @@ class ListCompanySerializer(serializers.ModelSerializer):
   class Meta:
     model = Company
     fields = ('company_id', 'panel', 'test', 'disabled', 'companyname', 'address', 'groups')
+
+class DetailCompanyMinSerializer(serializers.ModelSerializer):
+  #company_id = serializers.SerializerMethodField()
+  latitude = serializers.SerializerMethodField()
+  longtitude = serializers.SerializerMethodField()
+  operatorprompt = serializers.SerializerMethodField()
+ 
+  #def get_company_id(self,obj):
+  #  return obj.company_id.replace('#', '&')
+
+  def get_latitude(self, obj):
+    return Panel.objects.get(panel_id = obj.company_id.split('#', 1)[0]).latitude
+    
+  def get_longtitude(self, obj):
+    return Panel.objects.get(panel_id = obj.company_id.split('#', 1)[0]).longtitude
+
+  def get_operatorprompt(self, obj):
+    return Groups.objects.get(panel = obj.company_id.split('#', 1)[0], group_field = obj.company_id.split('#', 1)[1]).operatorprompt
+  
+  class Meta:
+    model = Company
+    fields = ('company_id', 'companyname', 'address', 'latitude', 'longtitude', 'operatorprompt')
+  
