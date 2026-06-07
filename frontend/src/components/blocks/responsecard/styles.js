@@ -1,6 +1,10 @@
 import styled from "styled-components";
 
 export const StyledResponseCard = styled.article`
+  position: absolute;
+  top: 0;
+  left: 550px;
+  background: white;
   width: 1080px;
   height:100vh;
   margin-left: auto;

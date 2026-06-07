@@ -62,7 +62,7 @@ export const StyledItem = styled.li`
     overflow: hidden;
     cursor: pointer;
     }
-  a:nth-child(3) {
+  span:nth-child(3) {
     width: 550px;
     overflow: hidden;
     text-decoration: none;

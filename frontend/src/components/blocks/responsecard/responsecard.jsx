@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom"
+//import { useParams } from "react-router-dom"
 import { 
   StyledResponseCard, 
   StyledAccount, 
@@ -11,8 +11,8 @@ import {
   StyledHeadPhoto, 
   StyledPhoto} from "./styles";
 
-export default function ResponseCard () {
-  const {company_id} = useParams()
+export default function ResponseCard ({company_id}) {
+  //const {company_id} = useParams()
   const [responseCard, setCard] = useState({})
   useEffect(() => {
     fetch(
@@ -25,7 +25,6 @@ export default function ResponseCard () {
       return res.json();
     })
     .then((data) => {
-      console.log(data.length)
       setCard(data);
     });
   }, [])

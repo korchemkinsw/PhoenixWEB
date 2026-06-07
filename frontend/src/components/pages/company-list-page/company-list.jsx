@@ -2,13 +2,13 @@ import React, {useState, useEffect} from "react";
 import api from "/src/api";
 import { StyledWrapper, StyledHead, StyledList, StyledItem } from "./styles";
 import GroupsList from "/src/components/blocks/groups/groups-list";
+import ResponseCard from"/src/components/blocks/responsecard/responsecard";
 import { groups } from "/src/mocks/groups-list";
 
 export default function CompanyListPage ({company}) {
-  const [error, setError] = useState(null);
   const [selectedCompany, setCompany] = useState("");
-  //selectedCompany && useEffect(() => {api.getData(api.BackUrl.company+"/"+selectedCompany, 'groups', setList, setError)}, []);
-  //selectedCompany && api.getData(api.BackUrl.company+"/"+selectedCompany, 'groups', setList, setError)
+  const [selectedCard, setCard] = useState("");
+  console.log(selectedCard)
   return (
     <StyledWrapper>
       <StyledHead>
@@ -25,21 +25,24 @@ export default function CompanyListPage ({company}) {
             <StyledItem key={index} >
               <span className={item.test ? "test" : item.disabled ? "disabled" : "act"}>  </span>
               <span onClick={() => (
-              item.company_id === selectedCompany ? setCompany(""):setCompany(item.company_id)
-              )}>
-                {item.panel}
+                  item.company_id === selectedCompany ? setCompany(""):setCompany(item.company_id)
+                )}>
+                {item.company_id.split('#',1)[0]}
               </span>
-              <a href={`/company/${item.company_id.replace('#',"&")}`} >
+              <span onClick={() => (
+                  item.company_id === selectedCard ? setCard(""):setCard(item.company_id)
+                )}>
                 {item.companyname}
-              </a>
+              </span>
               <span>{item.address}</span>
               {
                 item.company_id === selectedCompany && 
-                <GroupsList groups={item.groups} />
+                <GroupsList company_id = {item.company_id.replace('#',"&")} />
               }
             </StyledItem>
         ))}
       </StyledList>
+      {selectedCard && <ResponseCard company_id = {selectedCard.replace('#',"&")} />} 
     </StyledWrapper>
   )
 }

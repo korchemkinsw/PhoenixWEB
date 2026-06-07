@@ -1,45 +1,14 @@
-const BASE_URL = "http://127.0.0.1:8000"
-
 class Api {
   constructor(url, headers) {
     this._url = url
     this._headers = headers
   }
 
-  BackUrl = {
-    company: BASE_URL + "/phoenix/company",
-    panels: BASE_URL + "/phoenix/panels",
-  }
-
-  checkResponse(res) {
-    return new Promise((resolve, reject) => {
-      if (res.status === 204) {
-        return resolve(res)
-        }
-      const func = res.status < 400 ? resolve : reject
-      res.json().then(data => func(data))
-    })
-  }
-
-  getCompanyList() {
+  getCompanyList(setList, setError) {
     return fetch(
-      'http://127.0.0.1:8000/phoenix/company', {
-      method: 'GET',
-      headers: {
-        ...this._headers,
-        }
-      }
-    ).then(this.checkResponse)
-  }
-
-  getData(url, name, setData, setError) {
-    return fetch(
-      url,
+      'http://127.0.0.1:8000/phoenix/company',
       {
         method: 'GET',
-        headers: {
-          ...this._headers,
-        }
       })
       .then((response) => {
         if (response.ok) {
@@ -48,7 +17,41 @@ class Api {
         throw new Error(`${response.status} - ${response.statusText}`)
       })
       .then((response) => response.json())
-      .then((name) => setData(name))
+      .then((data) => setList(data))
+      .then((error) => setError(error));
+    }
+
+  getGroupsCompanyList(setList, setError, company_id) {
+    return fetch(
+      `http://127.0.0.1:8000/phoenix/company/groups/${company_id}`,
+      {
+        method: 'GET',
+      })
+      .then((response) => {
+        if (response.ok) {
+          return response;
+        }
+        throw new Error(`${response.status} - ${response.statusText}`)
+      })
+      .then((response) => response.json())
+      .then((data) => setList(data))
+      .then((error) => setError(error));
+    }
+
+  getCompany(setCard, setError, company_id) {
+    return fetch(
+      `http://127.0.0.1:8000/phoenix/company/${company_id}`,
+      {
+        method: 'GET',
+      })
+      .then((response) => {
+        if (response.ok) {
+          return response;
+        }
+        throw new Error(`${response.status} - ${response.statusText}`)
+      })
+      .then((response) => response.json())
+      .then((data) => setCard(data))
       .then((error) => setError(error));
     }
 }
