@@ -6,7 +6,7 @@ class Api {
 
   getCompanyList(setList, setError) {
     return fetch(
-      'http://127.0.0.1:8000/phoenix/company',
+      '/phoenix/company/',
       {
         method: 'GET',
       })
@@ -23,7 +23,7 @@ class Api {
 
   getGroupsCompanyList(setList, setError, company_id) {
     return fetch(
-      `http://127.0.0.1:8000/phoenix/company/groups/${company_id}`,
+      `/phoenix/company/groups/${company_id}/`,
       {
         method: 'GET',
       })
@@ -38,9 +38,9 @@ class Api {
       .then((error) => setError(error));
     }
 
-  getCompany(setCard, setError, company_id) {
+  getResponseCard(setCard, setError, company_id) {
     return fetch(
-      `http://127.0.0.1:8000/phoenix/company/${company_id}`,
+      `/phoenix/company/response-card/${company_id}/`,
       {
         method: 'GET',
       })

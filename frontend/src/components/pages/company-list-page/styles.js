@@ -65,8 +65,7 @@ export const StyledItem = styled.li`
   span:nth-child(3) {
     width: 550px;
     overflow: hidden;
-    text-decoration: none;
-    color: inherit;
+    cursor: pointer;
     }
   span:nth-child(4) {
     width: 100%;

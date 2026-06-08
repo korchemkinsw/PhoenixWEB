@@ -8,7 +8,6 @@ import { groups } from "/src/mocks/groups-list";
 export default function CompanyListPage ({company}) {
   const [selectedCompany, setCompany] = useState("");
   const [selectedCard, setCard] = useState("");
-  console.log(selectedCard)
   return (
     <StyledWrapper>
       <StyledHead>

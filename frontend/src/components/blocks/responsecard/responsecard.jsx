@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-//import { useParams } from "react-router-dom"
+import api from "/src/api";
 import { 
   StyledResponseCard, 
   StyledAccount, 
@@ -12,22 +12,9 @@ import {
   StyledPhoto} from "./styles";
 
 export default function ResponseCard ({company_id}) {
-  //const {company_id} = useParams()
+  const [error, setError] = useState(null);
   const [responseCard, setCard] = useState({})
-  useEffect(() => {
-    fetch(
-      `http://127.0.0.1:8000/phoenix/company/${company_id}`,
-      {
-        method: 'GET',
-      }
-    )
-    .then((res) => {
-      return res.json();
-    })
-    .then((data) => {
-      setCard(data);
-    });
-  }, [])
+  useEffect(() => {api.getResponseCard(setCard, setError, company_id)}, [])
   return (
     responseCard.company_id &&
     <StyledResponseCard>
