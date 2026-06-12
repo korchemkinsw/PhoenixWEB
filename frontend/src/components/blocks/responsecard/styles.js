@@ -1,26 +1,23 @@
 import styled from "styled-components";
 
-export const StyledResponseCard = styled.article`
-  position: absolute;
-  top: 0;
-  left: 550px;
+export const StyledResponseCard = styled.div`
   background: white;
-  width: 1080px;
-  height:100vh;
+  width: 98%;
+  height:auto;
   margin-left: auto;
   margin-right: auto;
   display: grid;
   grid-template-areas:
       "account account company company company company"
-      "account account address address address address"
-      "account account gps gps gps gps"
+      "address address address address address address"
+      "gps gps gps gps gps gps"
       "head-inf head-inf head-inf head-inf head-inf head-inf"
       "info info info info info info"
       "head-photo head-photo head-photo head-photo head-photo head-photo"
       "photo1 photo1 photo2 photo2 photo3 photo3"
       "photo4 photo4 photo5 photo5 photo6 photo6"
       "photo7 photo7 photo8 photo8 photo9 photo9";
-  overflow-y: scroll;
+
 `
 
 export const StyledAccount = styled.p`
@@ -35,7 +32,7 @@ export const StyledAccount = styled.p`
 
 export const StyledCompany = styled.p`
   grid-area: company;
-  font-size: 24px;
+  font-size: 36px;
   font-weight: bold;
   margin: 0;
   line-height: 60px;
@@ -43,7 +40,7 @@ export const StyledCompany = styled.p`
 
 export const StyledAddress = styled.p`
   grid-area: address;
-  font-size: 20px;
+  font-size: 32px;
   display: block;
   margin: 0;
   line-height: 30px;
@@ -51,10 +48,12 @@ export const StyledAddress = styled.p`
 
 export const StyledGPS = styled.p`
   grid-area: gps;
+  margin-left: auto;
+  margin-right: auto;
   display: flex;
   gap: 10px;
   p {
-    font-size: 18px;
+    font-size: 28px;
     span {
       font-weight: bold;
     }
@@ -70,7 +69,7 @@ export const StyledInfo = styled.textarea`
   grid-area: info;
   grid-area: info;
   resize: none;
-  font-size: 18px;
+  font-size: 28px;
   height: 250px;
 `
 
@@ -80,8 +79,6 @@ export const StyledHeadPhoto = styled.p`
 `
 
 export const StyledPhoto = styled.img`
-  width: 360px;
-  height: 360px;
   :nth-of-type(1){
     grid-area: photo1;
   }

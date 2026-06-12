@@ -38,6 +38,23 @@ class Api {
       .then((error) => setError(error));
     }
 
+  getResponseTeam(setTeams, setError) {
+    return fetch(
+      '/phoenix/groupresponse/',
+      {
+        method: 'GET',
+      })
+      .then((response) => {
+        if (response.ok) {
+          return response;
+        }
+        throw new Error(`${response.status} - ${response.statusText}`)
+      })
+      .then((response) => response.json())
+      .then((data) => setTeams(data))
+      .then((error) => setError(error));
+    }
+
   getResponseCard(setCard, setError, company_id) {
     return fetch(
       `/phoenix/company/response-card/${company_id}/`,

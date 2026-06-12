@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
-import api from "/src/api";
 import { 
-  StyledResponseCard, 
+  StyledResponseCard,
   StyledAccount, 
   StyledCompany, 
   StyledAddress,
@@ -11,32 +10,29 @@ import {
   StyledHeadPhoto, 
   StyledPhoto} from "./styles";
 
-export default function ResponseCard ({company_id}) {
-  const [error, setError] = useState(null);
-  const [responseCard, setCard] = useState({})
-  useEffect(() => {api.getResponseCard(setCard, setError, company_id)}, [])
+export default function ResponseCard ({company}) {
   return (
-    responseCard.company_id &&
+    company.company_id &&
     <StyledResponseCard>
-      <StyledAccount>{responseCard.company_id.split('#',1)[0]}</StyledAccount>
-      <StyledCompany>{responseCard.companyname}</StyledCompany>
-      <StyledAddress>{responseCard.address}</StyledAddress>
+      <StyledAccount>{company.company_id.split('#',1)[0]}</StyledAccount>
+      <StyledCompany>{company.companyname}</StyledCompany>
+      <StyledAddress>{company.address}</StyledAddress>
       <StyledGPS>
-        {responseCard.latitude && <p><span>Широта: </span>{responseCard.latitude}</p>}
-        {responseCard.longtitude && <p><span>Долгота: </span>{responseCard.longtitude}</p>}
+        {company.latitude && <p><span>Широта: </span>{company.latitude}</p>}
+        {company.longtitude && <p><span>Долгота: </span>{company.longtitude}</p>}
       </StyledGPS>
       <StyledHeadInfo>Информация по объекту:</StyledHeadInfo>
-      <StyledInfo>{responseCard.operatorprompt}</StyledInfo>
+      <StyledInfo>{company.operatorprompt}</StyledInfo>
       <StyledHeadPhoto>Фотографии объекта:</StyledHeadPhoto>
-      <StyledPhoto src={`/Photos/${responseCard.company_id.split('#',1)[0]}_f1.jpg`} alt="Photo1" width="80" height="60"></StyledPhoto>
-      <StyledPhoto src={`/Photos/${responseCard.company_id.split('#',1)[0]}_f2.jpg`} alt="Photo2" width="80" height="60"></StyledPhoto>
-      <StyledPhoto src={`/Photos/${responseCard.company_id.split('#',1)[0]}_f3.jpg`} alt="Photo3" width="80" height="60"></StyledPhoto>
-      <StyledPhoto src={`/Photos/${responseCard.company_id.split('#',1)[0]}_f4.jpg`} alt="Photo4" width="80" height="60"></StyledPhoto>        
-      <StyledPhoto src={`/Photos/${responseCard.company_id.split('#',1)[0]}_f5.jpg`} alt="Photo5" width="80" height="60"></StyledPhoto>
-      <StyledPhoto src={`/Photos/${responseCard.company_id.split('#',1)[0]}_f6.jpg`} alt="Photo6" width="80" height="60"></StyledPhoto>
-      <StyledPhoto src={`/Photos/${responseCard.company_id.split('#',1)[0]}_f7.jpg`} alt="Photo7" width="80" height="60"></StyledPhoto>
-      <StyledPhoto src={`/Photos/${responseCard.company_id.split('#',1)[0]}_f8.jpg`} alt="Photo8" width="80" height="60"></StyledPhoto>
-      <StyledPhoto src={`/Photos/${responseCard.company_id.split('#',1)[0]}_f9.jpg`} alt="Photo9" width="80" height="60"></StyledPhoto>
+      <StyledPhoto src={`/Photos/${company.company_id.split('#',1)[0]}_f1.jpg`} alt="Photo1" width="80" height="60"></StyledPhoto>
+      <StyledPhoto src={`/Photos/${company.company_id.split('#',1)[0]}_f2.jpg`} alt="Photo2" width="80" height="60"></StyledPhoto>
+      <StyledPhoto src={`/Photos/${company.company_id.split('#',1)[0]}_f3.jpg`} alt="Photo3" width="80" height="60"></StyledPhoto>
+      <StyledPhoto src={`/Photos/${company.company_id.split('#',1)[0]}_f4.jpg`} alt="Photo4" width="80" height="60"></StyledPhoto>        
+      <StyledPhoto src={`/Photos/${company.company_id.split('#',1)[0]}_f5.jpg`} alt="Photo5" width="80" height="60"></StyledPhoto>
+      <StyledPhoto src={`/Photos/${company.company_id.split('#',1)[0]}_f6.jpg`} alt="Photo6" width="80" height="60"></StyledPhoto>
+      <StyledPhoto src={`/Photos/${company.company_id.split('#',1)[0]}_f7.jpg`} alt="Photo7" width="80" height="60"></StyledPhoto>
+      <StyledPhoto src={`/Photos/${company.company_id.split('#',1)[0]}_f8.jpg`} alt="Photo8" width="80" height="60"></StyledPhoto>
+      <StyledPhoto src={`/Photos/${company.company_id.split('#',1)[0]}_f9.jpg`} alt="Photo9" width="80" height="60"></StyledPhoto>
     </StyledResponseCard>
   )
 }

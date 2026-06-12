@@ -9,8 +9,13 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import os
 from pathlib import Path
+
+import environ
+
+env = environ.Env()
+environ.Env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -81,15 +86,14 @@ DATABASES = {
         "ENGINE": "mssql",
         "NAME": "Pult4DB",
         "USER": "sa",
-        "PASSWORD": "nthvbyfnjh",
-        "HOST": "127.0.0.1",
+        "PASSWORD": os.environ.get('DB_PASSWORD'),
+        "HOST": os.environ.get('PH_DB_HOST'),
         "PORT": "1433",
         "OPTIONS": {"driver": "ODBC Driver 18 for SQL Server",
         "extra_params": "Enscripted=no; TrustServerCertificate=yes"
         },
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

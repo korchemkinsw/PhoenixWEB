@@ -72,3 +72,10 @@ export const StyledItem = styled.li`
     overflow: hidden;
     }
   `;
+
+  export const StyledCardWrapper = styled.article`
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 720px;
+  `;

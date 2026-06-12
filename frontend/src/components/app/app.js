@@ -1,21 +1,19 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter, Routes, Route, useParams } from "react-router-dom"
+import { BrowserRouter, Routes, Route } from "react-router-dom"
 import { GlobalStyle } from "./styles";
-import api from "/src/api";
+import ResponsePage from "/src/components/pages/response-team -page/response-team";
 import CompanyListPage from "/src/components/pages/company-list-page/company-list";
+import ResponseCardPage from "/src/components/pages/response-card-page/response-card";
 import { company } from "/src/mocks/company-list";
 
 export default function App() {
-  const [error, setError] = useState(null);
-  const [companyList, setList] = useState([]);
-  useEffect(() => { 
-    !companyList.length && api.getCompanyList(setList, setError) 
-  }, []);
   return (
     <BrowserRouter >
       <GlobalStyle />
       <Routes >
-        <Route path = "/company" element = { < CompanyListPage company = { companyList } /> } />
+        <Route path = "/response" element = { < ResponsePage />} />
+        <Route path = "/company" element = { < CompanyListPage /> } />
+        <Route path = "/company/:id" element = { <ResponseCardPage  />} />
       </Routes> 
     </BrowserRouter>
   )

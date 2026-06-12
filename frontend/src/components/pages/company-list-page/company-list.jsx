@@ -1,13 +1,19 @@
 import React, {useState, useEffect} from "react";
 import api from "/src/api";
-import { StyledWrapper, StyledHead, StyledList, StyledItem } from "./styles";
+import { StyledWrapper, StyledHead, StyledList, StyledItem, StyledCardWrapper } from "./styles";
 import GroupsList from "/src/components/blocks/groups/groups-list";
 import ResponseCard from"/src/components/blocks/responsecard/responsecard";
 import { groups } from "/src/mocks/groups-list";
 
-export default function CompanyListPage ({company}) {
+export default function CompanyListPage () {
   const [selectedCompany, setCompany] = useState("");
   const [selectedCard, setCard] = useState("");
+  const [error, setError] = useState(null);
+  const [companyList, setList] = useState([]);
+  useEffect(() => { 
+    !companyList.length && api.getCompanyList(setList, setError) 
+  }, []);
+  console.log(selectedCard)
   return (
     <StyledWrapper>
       <StyledHead>
@@ -18,9 +24,9 @@ export default function CompanyListPage ({company}) {
       </StyledHead>
       <StyledList>
         {
-          company && 
-          company.length &&
-          company.map((item, index) => (
+          companyList && 
+          companyList.length &&
+          companyList.map((item, index) => (
             <StyledItem key={index} >
               <span className={item.test ? "test" : item.disabled ? "disabled" : "act"}>  </span>
               <span onClick={() => (
@@ -41,7 +47,11 @@ export default function CompanyListPage ({company}) {
             </StyledItem>
         ))}
       </StyledList>
-      {selectedCard && <ResponseCard company_id = {selectedCard.replace('#',"&")} />} 
+      {selectedCard && (
+        <StyledCardWrapper>
+          <ResponseCard company = {selectedCard.replace('#',"&")} />
+        </StyledCardWrapper>
+      )} 
     </StyledWrapper>
   )
 }

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Company, Groups, Panel
+from .models import Company, Groupresponse, Groups, Panel
 
 class ListGroupsSerializer(serializers.ModelSerializer):
   class Meta:
@@ -37,4 +37,17 @@ class DetailCompanyMinSerializer(serializers.ModelSerializer):
   class Meta:
     model = Company
     fields = ('company_id', 'companyname', 'address', 'latitude', 'longtitude', 'operatorprompt')
+
+class ListGroupResponseSerializer(serializers.ModelSerializer):
+  company = serializers.SerializerMethodField()
+
+  def get_company(self, obj):
+    if obj.panel_id:
+      company = Groups.objects.get(panel = obj.panel_id, group_field = obj.group_field).company
+      return DetailCompanyMinSerializer(company, read_only=True).data
+    return {}
+    
+  class Meta:
+    model = Groupresponse
+    fields = ('group_id', 'description', 'status', 'event_id', 'panel_id', 'company')
   

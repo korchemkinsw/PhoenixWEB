@@ -1,8 +1,14 @@
 from django.shortcuts import render
 
 from rest_framework import generics
-from .models import Company, Groups
-from .serializers import ListCompanySerializer, DetailCompanyMinSerializer, ListGroupsSerializer
+from .models import Company, Groupresponse, Groups
+from .serializers import ListCompanySerializer, DetailCompanyMinSerializer, ListGroupsSerializer, ListGroupResponseSerializer
+
+class ListGroupResponse(generics.ListAPIView):
+  serializer_class = ListGroupResponseSerializer
+
+  def get_queryset(self):
+    return Groupresponse.objects.filter(description__startswith = 'ГБР')
 
 class ListGroups(generics.ListAPIView):
   serializer_class = ListGroupsSerializer
