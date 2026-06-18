@@ -7,13 +7,20 @@ export default function ResponseTeam ({responseteam}) {
     <StyledWrapper>
       <StyledTeamBlock>
         <StyledText>{responseteam.description}</StyledText>
-        <StyledAlarmBlock>
-          <StyledText>{responseteam.panel_id}</StyledText>
-        </StyledAlarmBlock>
+        {
+          responseteam.panel_id ? (
+            <StyledAlarmBlock>
+              <h3>ТРЕВОГА</h3>
+              <p><span>объект: </span>{responseteam.panel_id}</p>
+              <p><span>раздел: </span>{responseteam.message}</p>
+              <p><span>событие: {responseteam.event}</span></p>
+            </StyledAlarmBlock>
+          ) : 
+          <p>Если ничего нет - обнови страницу или группа не отправлена в ПО "Phoenix"</p>
+        }
       </StyledTeamBlock>
-      {
-        responseteam.company && <ResponseCard company = {responseteam.company} />
-      }
+      {responseteam.company.company_id && <h3>Карточка объекта</h3>}
+      {responseteam.company && <ResponseCard company = {responseteam.company} />}
     </StyledWrapper>
   )
 }

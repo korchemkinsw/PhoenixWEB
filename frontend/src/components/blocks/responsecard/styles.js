@@ -53,10 +53,16 @@ export const StyledGPS = styled.p`
   display: flex;
   gap: 10px;
   p {
+    display: flex;
+    gap: 10px;
     font-size: 28px;
-    span {
+    span:nth-of-type(1) {
       font-weight: bold;
     }
+  }
+  button {
+    width: 42px;
+    height: 32px;
   }
 `
 

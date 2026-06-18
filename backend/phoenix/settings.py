@@ -30,7 +30,7 @@ SECRET_KEY = 'django-insecure-!-zmdqgzk8nz%_nn4kbg44zonbrjm^0oz5*s$((!vmtd%aq&22
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1', 'localhost', '192.168.0.0']
+ALLOWED_HOSTS = ['127.0.0.1', 'localhost']
 
 
 # Application definition
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'phoenix',
     'pult4db',
+    'pult4db_archives',
 ]
 
 MIDDLEWARE = [
@@ -84,6 +85,17 @@ WSGI_APPLICATION = 'phoenix.wsgi.application'
 DATABASES = {
     'default': {
         "ENGINE": "mssql",
+        "NAME": "Pult4DB_Archives",
+        "USER": "sa",
+        "PASSWORD": os.environ.get('DB_PASSWORD'),
+        "HOST": os.environ.get('PH_DB_HOST'),
+        "PORT": "1433",
+        "OPTIONS": {"driver": "ODBC Driver 18 for SQL Server",
+        "extra_params": "Enscripted=no; TrustServerCertificate=yes"
+        },
+    },
+    'pult4db': {
+        "ENGINE": "mssql",
         "NAME": "Pult4DB",
         "USER": "sa",
         "PASSWORD": os.environ.get('DB_PASSWORD'),
@@ -92,8 +104,13 @@ DATABASES = {
         "OPTIONS": {"driver": "ODBC Driver 18 for SQL Server",
         "extra_params": "Enscripted=no; TrustServerCertificate=yes"
         },
+    },
+    'pult4db_archives': {
+        
     }
 }
+
+#DATABASE_ROUTES = ['phoenix.db_routes.DBRouter']
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators

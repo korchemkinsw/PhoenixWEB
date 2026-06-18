@@ -12,6 +12,7 @@ export default function App() {
       <GlobalStyle />
       <Routes >
         <Route path = "/response" element = { < ResponsePage />} />
+        <Route path = "/response/:id" element = { < ResponsePage />} />
         <Route path = "/company" element = { < CompanyListPage /> } />
         <Route path = "/company/:id" element = { <ResponseCardPage  />} />
       </Routes> 

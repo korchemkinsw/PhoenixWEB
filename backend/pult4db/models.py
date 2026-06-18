@@ -22,6 +22,27 @@ class Channeltypes(models.Model):
         db_table = 'ChannelTypes'
         db_table_comment = 'Типы каналов'
 
+class Code(models.Model):
+    code = models.CharField(db_column='Code', primary_key=True, max_length=6)  # Field name made lowercase. The composite primary key (Code, CodeGroup) found, that is not supported. The first column is selected.
+    codegroup = models.SmallIntegerField(db_column='CodeGroup')  # Field name made lowercase.
+    message = models.CharField(db_column='Message', max_length=500, blank=True, null=True)  # Field name made lowercase.
+    autoreset = models.BooleanField(db_column='AutoReset', blank=True, null=True)  # Field name made lowercase.
+    groupsent = models.BooleanField(db_column='GroupSent', blank=True, null=True)  # Field name made lowercase.
+    flag = models.IntegerField(db_column='Flag', blank=True, null=True)  # Field name made lowercase.
+    zoneno = models.IntegerField(db_column='Zoneno', blank=True, null=True)  # Field name made lowercase.
+    svet = models.SmallIntegerField(db_column='Svet', blank=True, null=True)  # Field name made lowercase.
+    accesscode = models.BooleanField(db_column='AccessCode', blank=True, null=True)  # Field name made lowercase.
+    filename = models.CharField(db_column='FileName', max_length=100, blank=True, null=True)  # Field name made lowercase.
+    idtcode = models.ForeignKey('Typecode', models.DO_NOTHING, db_column='idTCode', blank=True, null=True)  # Field name made lowercase.
+    system = models.BooleanField(db_column='System', blank=True, null=True)  # Field name made lowercase.
+    isneedreport = models.BooleanField(db_column='IsNeedReport', blank=True, null=True)  # Field name made lowercase.
+    contactid_code = models.CharField(db_column='contactId_code', max_length=4, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Code'
+        unique_together = (('code', 'codegroup'),)
+
 class Company(models.Model):
     companyname = models.CharField(db_column='CompanyName', max_length=150, blank=True, null=True, db_comment='Название')  # Field name made lowercase.
     address = models.CharField(max_length=150, blank=True, null=True, db_comment='Адрес')
@@ -318,3 +339,35 @@ class Statusgroupresponse(models.Model):
         managed = False
         db_table = 'StatusGroupResponse'
         db_table_comment = 'Состояния групп реагирования'
+
+class Typecode(models.Model):
+    idtcode = models.IntegerField(db_column='idTCode', primary_key=True)  # Field name made lowercase.
+    message = models.CharField(db_column='Message', unique=True, max_length=50)  # Field name made lowercase.
+    priority = models.SmallIntegerField(db_column='Priority', blank=True, null=True)  # Field name made lowercase.
+    order = models.SmallIntegerField(blank=True, null=True)
+    typecodefilename = models.CharField(db_column='TypeCodeFileName', max_length=100, blank=True, null=True)  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'TypeCode'
+
+class Zones(models.Model):
+    panel = models.OneToOneField(Groups, models.DO_NOTHING, db_column='Panel_id', primary_key=True, db_comment='Groups.Panel_id')  # Field name made lowercase. The composite primary key (Panel_id, Zone, Group_) found, that is not supported. The first column is selected.
+    zone = models.IntegerField(db_column='Zone', db_comment='Номер')  # Field name made lowercase.
+    group_field = models.ForeignKey(Groups, models.DO_NOTHING, db_column='Group_', related_name='zones_group_field_set', db_comment='Groups.Group_')  # Field name made lowercase. Field renamed because it ended with '_'.
+    message = models.CharField(db_column='Message', max_length=250, blank=True, null=True, db_comment='Описание шлейфа')  # Field name made lowercase.
+    status = models.IntegerField(db_column='Status', blank=True, null=True, db_comment='Состояние шлейфа: 1 - норма; 2')  # Field name made lowercase.
+    statustime = models.DateTimeField(db_column='StatusTime', blank=True, null=True, db_comment='Дата и время изменения состоян')  # Field name made lowercase.
+    ispatrol = models.BooleanField(db_column='IsPatrol', blank=True, null=True, db_comment='Патруль: 1 - да; 0 - нет')  # Field name made lowercase.
+    isalarmbutton = models.BooleanField(db_column='IsAlarmButton', blank=True, null=True, db_comment='Тревожная кнопка')  # Field name made lowercase.
+    #radiozonetypeid = models.ForeignKey(Radiozonetype, models.DO_NOTHING, db_column='RadioZoneTypeid')  # Field name made lowercase.
+    ispatrolinspectionsystem = models.BooleanField(db_column='IsPatrolInspectionSystem')  # Field name made lowercase.
+    lastpatrolinspection = models.DateTimeField(db_column='LastPatrolInspection', blank=True, null=True)  # Field name made lowercase.
+    isviolationpatrolcontrol = models.BooleanField(db_column='IsViolationPatrolControl')  # Field name made lowercase.
+
+    class Meta:
+        managed = False
+        db_table = 'Zones'
+        unique_together = (('panel', 'zone', 'group_field'),)
+        db_table_comment = 'Шлейфы'
+    

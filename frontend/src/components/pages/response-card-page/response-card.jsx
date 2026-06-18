@@ -8,6 +8,7 @@ export default function ResponseCardPage () {
   const { id } = useParams()
   const [error, setError] = useState(null);
   const [card, setCard] = useState([]);
+  console.log(id)
   useEffect(() => {api.getResponseCard(setCard, setError, id)},[])
   return (
     <StyledWrapper>

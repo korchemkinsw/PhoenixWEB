@@ -10,19 +10,33 @@ import {
   StyledHeadPhoto, 
   StyledPhoto} from "./styles";
 
-export default function ResponseCard ({company}) {
+export default function ResponseCard ({company}) {  
+  const handleCopy = async (textCopy) => {
+    try {
+      await navigator.clipboard.writeText(textCopy)
+    }
+    catch (error) {
+      console.error(error)
+    }
+  }
   return (
-    company.company_id &&
+    company.company_id && 
     <StyledResponseCard>
       <StyledAccount>{company.company_id.split('#',1)[0]}</StyledAccount>
       <StyledCompany>{company.companyname}</StyledCompany>
       <StyledAddress>{company.address}</StyledAddress>
       <StyledGPS>
-        {company.latitude && <p><span>Широта: </span>{company.latitude}</p>}
-        {company.longtitude && <p><span>Долгота: </span>{company.longtitude}</p>}
+        {company.latitude && company.longtitude && 
+        <p>
+          <span>Координаты:</span>
+          <span>{company.latitude} {company.longtitude}</span>
+          <button onClick={() => handleCopy(`${company.latitude} ${company.longtitude}`)}>copy</button>
+        </p>}
       </StyledGPS>
       <StyledHeadInfo>Информация по объекту:</StyledHeadInfo>
-      <StyledInfo>{company.operatorprompt}</StyledInfo>
+      <StyledInfo>
+        {company.operatorprompt}
+      </StyledInfo>
       <StyledHeadPhoto>Фотографии объекта:</StyledHeadPhoto>
       <StyledPhoto src={`/Photos/${company.company_id.split('#',1)[0]}_f1.jpg`} alt="Photo1" width="80" height="60"></StyledPhoto>
       <StyledPhoto src={`/Photos/${company.company_id.split('#',1)[0]}_f2.jpg`} alt="Photo2" width="80" height="60"></StyledPhoto>
