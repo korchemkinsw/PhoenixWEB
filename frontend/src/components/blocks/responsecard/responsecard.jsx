@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from "react";
+import { CopyToClipboard } from 'react-copy-to-clipboard';
+import Images from "/src/components/blocks/images/images";
 import { 
   StyledResponseCard,
   StyledAccount, 
@@ -8,9 +10,15 @@ import {
   StyledHeadInfo, 
   StyledInfo, 
   StyledHeadPhoto, 
-  StyledPhoto} from "./styles";
+  } from "./styles";
 
 export default function ResponseCard ({company}) {  
+  const [text, srtText] = useState('');
+  const [isCopied, setIsCopied] = useState(false);
+  const onCopyText = () => {
+    setIsCopied(true);
+    setTimeout(() => setIsCopied(false), 1500);
+  }
   const handleCopy = async (textCopy) => {
     try {
       await navigator.clipboard.writeText(textCopy)
@@ -19,6 +27,9 @@ export default function ResponseCard ({company}) {
       console.error(error)
     }
   }
+
+  const regGPS = /[5-6]\d[\.\,]\d+[\s\.\,]+[2-3]\d[\.\,]\d+/
+
   return (
     company.company_id && 
     <StyledResponseCard>
@@ -26,27 +37,53 @@ export default function ResponseCard ({company}) {
       <StyledCompany>{company.companyname}</StyledCompany>
       <StyledAddress>{company.address}</StyledAddress>
       <StyledGPS>
-        {company.latitude && company.longtitude && 
-        <p>
-          <span>Координаты:</span>
-          <span>{company.latitude} {company.longtitude}</span>
-          <button onClick={() => handleCopy(`${company.latitude} ${company.longtitude}`)}>copy</button>
-        </p>}
+        {
+          company.latitude && company.longtitude && 
+          <p>
+            <span>Координаты:</span>
+            <span>{company.latitude} {company.longtitude}</span>
+            <button onClick={() => handleCopy(`${company.latitude} ${company.longtitude}`)}>copyGPS</button>
+          </p>
+        }
       </StyledGPS>
-      <StyledHeadInfo>Информация по объекту:</StyledHeadInfo>
-      <StyledInfo>
-        {company.operatorprompt}
-      </StyledInfo>
-      <StyledHeadPhoto>Фотографии объекта:</StyledHeadPhoto>
-      <StyledPhoto src={`/Photos/${company.company_id.split('#',1)[0]}_f1.jpg`} alt="Photo1" width="80" height="60"></StyledPhoto>
-      <StyledPhoto src={`/Photos/${company.company_id.split('#',1)[0]}_f2.jpg`} alt="Photo2" width="80" height="60"></StyledPhoto>
-      <StyledPhoto src={`/Photos/${company.company_id.split('#',1)[0]}_f3.jpg`} alt="Photo3" width="80" height="60"></StyledPhoto>
-      <StyledPhoto src={`/Photos/${company.company_id.split('#',1)[0]}_f4.jpg`} alt="Photo4" width="80" height="60"></StyledPhoto>        
-      <StyledPhoto src={`/Photos/${company.company_id.split('#',1)[0]}_f5.jpg`} alt="Photo5" width="80" height="60"></StyledPhoto>
-      <StyledPhoto src={`/Photos/${company.company_id.split('#',1)[0]}_f6.jpg`} alt="Photo6" width="80" height="60"></StyledPhoto>
-      <StyledPhoto src={`/Photos/${company.company_id.split('#',1)[0]}_f7.jpg`} alt="Photo7" width="80" height="60"></StyledPhoto>
-      <StyledPhoto src={`/Photos/${company.company_id.split('#',1)[0]}_f8.jpg`} alt="Photo8" width="80" height="60"></StyledPhoto>
-      <StyledPhoto src={`/Photos/${company.company_id.split('#',1)[0]}_f9.jpg`} alt="Photo9" width="80" height="60"></StyledPhoto>
+      {
+        company.operatorprompt && company.operatorprompt.length && 
+        <StyledHeadInfo>
+          Информация по объекту:
+          {
+            regGPS.exec(company.operatorprompt) &&
+            <CopyToClipboard text={regGPS.exec(company.operatorprompt)[0]} onCopy={onCopyText}>
+              <button style={{'margin-left':'10px'}}>copyGPS</button>
+            </CopyToClipboard>
+          }
+        </StyledHeadInfo>  
+      }
+      {
+        company.operatorprompt && company.operatorprompt.length &&
+        <StyledInfo>
+          {company.operatorprompt}
+        </StyledInfo>
+      }
+      {
+        company.photos && company.photos.length &&    
+        <StyledHeadPhoto>Фотографии объекта:</StyledHeadPhoto>
+      }
+      {
+        company.photos && company.photos.length &&
+        <div style={{'grid-area': 'photos'}}> 
+          <Images images={company.photos} />
+        </div>
+      }
+      {
+        company.pictures && company.pictures.length &&    
+        <StyledHeadPhoto style={{'grid-area': 'head-pictures'}}>Фотографии раздела:</StyledHeadPhoto>
+      }
+      {
+        company.pictures && company.pictures.length &&
+        <div style={{'grid-area': 'pictures'}} >
+          <Images images={company.pictures} />
+        </div>
+      }
     </StyledResponseCard>
   )
 }

@@ -12,8 +12,14 @@ export default function ResponseTeam ({responseteam}) {
             <StyledAlarmBlock>
               <h3>ТРЕВОГА</h3>
               <p><span>объект: </span>{responseteam.panel_id}</p>
-              <p><span>раздел: </span>{responseteam.message}</p>
-              <p><span>событие: {responseteam.event}</span></p>
+              {
+                responseteam.message && responseteam.message.length &&
+                <p><span>раздел: </span>{responseteam.message}</p>
+              }
+              {
+                responseteam.event && responseteam.event.length &&
+                <p><span>событие: {responseteam.event}</span></p>
+              }
             </StyledAlarmBlock>
           ) : 
           <p>Если ничего нет - обнови страницу или группа не отправлена в ПО "Phoenix"</p>

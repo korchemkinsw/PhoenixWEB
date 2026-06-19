@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
 export const StyledWrapper = styled.article`
-  width: 720px;
-  height: 100vh;
+  width: 740px;
+  height: 130vh;
   margin-left: auto;
   margin-right: auto;
-  owvrflow: scroll;
+  margin-top: 40px;
+  owerflow: scroll;
 `

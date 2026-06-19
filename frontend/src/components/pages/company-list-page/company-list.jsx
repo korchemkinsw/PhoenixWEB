@@ -5,15 +5,33 @@ import GroupsList from "/src/components/blocks/groups/groups-list";
 import ResponseCard from"/src/components/blocks/responsecard/responsecard";
 import { groups } from "/src/mocks/groups-list";
 
+async function fetchData(url, setData, setError) {
+  try {
+    const response = await fetch(
+      url,
+      {
+        method: 'GET',
+      })
+    if (!response.ok) {
+      throw new Error(`${response.status} - ${response.statusText}`)
+    }
+    const data = await response.json()
+    setData(data)
+  } catch (error) {
+      setError(error)
+  }
+}
+
 export default function CompanyListPage () {
   const [selectedCompany, setCompany] = useState("");
   const [selectedCard, setCard] = useState("");
   const [error, setError] = useState(null);
   const [companyList, setList] = useState([]);
   useEffect(() => { 
-    !companyList.length && api.getCompanyList(setList, setError) 
+  //  !companyList.length && api.getCompanyList(setList, setError) 
+    !companyList.length && fetchData('/phoenix/company/', setList, setError)
   }, []);
-  console.log(selectedCard)
+  
   return (
     <StyledWrapper>
       <StyledHead>

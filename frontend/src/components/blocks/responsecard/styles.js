@@ -14,10 +14,9 @@ export const StyledResponseCard = styled.div`
       "head-inf head-inf head-inf head-inf head-inf head-inf"
       "info info info info info info"
       "head-photo head-photo head-photo head-photo head-photo head-photo"
-      "photo1 photo1 photo2 photo2 photo3 photo3"
-      "photo4 photo4 photo5 photo5 photo6 photo6"
-      "photo7 photo7 photo8 photo8 photo9 photo9";
-
+      "photos photos photos photos photos photos"
+      "head-pictures head-pictures head-pictures head-pictures head-pictures head-pictures"
+      "pictures pictures pictures pictures pictures pictures"
 `
 
 export const StyledAccount = styled.p`
@@ -61,7 +60,7 @@ export const StyledGPS = styled.p`
     }
   }
   button {
-    width: 42px;
+    width: 62px;
     height: 32px;
   }
 `
@@ -69,6 +68,10 @@ export const StyledGPS = styled.p`
 export const StyledHeadInfo = styled.p`
   grid-area: head-inf;
   font-weight: bold;
+  button {
+    width: 62px;
+    height: 32px;
+  }
 `
 
 export const StyledInfo = styled.textarea`
@@ -82,34 +85,4 @@ export const StyledInfo = styled.textarea`
 export const StyledHeadPhoto = styled.p`
   grid-area: head-photo;
   font-weight: bold;
-`
-
-export const StyledPhoto = styled.img`
-  :nth-of-type(1){
-    grid-area: photo1;
-  }
-  :nth-of-type(2){
-    grid-area: photo2;
-  }
-  :nth-of-type(3){
-    grid-area: photo3;
-  }
-  :nth-of-type(4){
-    grid-area: photo4;
-  }
-  :nth-of-type(5){
-    grid-area: photo5;
-  }
-  :nth-of-type(6){
-    grid-area: photo6;
-  }
-  :nth-of-type(7){
-    grid-area: photo7;
-  }
-  :nth-of-type(8){
-    grid-area: photo8;
-  }
-  :nth-of-type(9){
-    grid-area: photo9;
-  }
 `

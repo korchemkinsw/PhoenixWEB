@@ -38,9 +38,26 @@ class Api {
       .then((error) => setError(error));
     }
 
+    getDetailCompany(setCard, setError, company_id) {
+      return fetch(
+        `/phoenix/company/detail/${company_id}/`,
+        {
+          method: 'GET',
+        })
+        .then((response) => {
+          if (response.ok) {
+            return response;
+          }
+          throw new Error(`${response.status} - ${response.statusText}`)
+        })
+        .then((response) => response.json())
+        .then((data) => setCard(data))
+        .then((error) => setError(error));
+      }
+
   getResponseTeam(setTeams, setError) {
     return fetch(
-      '/phoenix/groupresponse/',
+      '/phoenix/rrteams/',
       {
         method: 'GET',
       })
@@ -54,23 +71,6 @@ class Api {
       .then((data) => setTeams(data))
       .then((error) => setError(error));
     }
-
-  getResponseCard(setCard, setError, company_id) {
-    return fetch(
-      `/phoenix/company/response-card/${company_id}/`,
-      {
-        method: 'GET',
-      })
-      .then((response) => {
-        if (response.ok) {
-          return response;
-        }
-        throw new Error(`${response.status} - ${response.statusText}`)
-      })
-      .then((response) => response.json())
-      .then((data) => setCard(data))
-      .then((error) => setError(error));
-    }
 }
 
-export default new Api(process.env.API_URL || 'http://localhost', { 'content-type': 'application/json' })
+export default new Api(process.env.API_URL || 'http://localhost', { 'content-type': 'application/json' });

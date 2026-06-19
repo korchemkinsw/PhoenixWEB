@@ -1,6 +1,8 @@
+import os.path
 from rest_framework import serializers
 from .models import Code, Company, Groupresponse, Groups, Panel, Zones
 from pult4db_archives.models import get_today_date_stamp, get_archive_model
+from phoenix.settings import IMAGE_PATCH
 
 class ListGroupsSerializer(serializers.ModelSerializer):
   class Meta:
@@ -13,6 +15,8 @@ class AlertGroupSerializer(serializers.ModelSerializer):
   address = serializers.SerializerMethodField()
   latitude = serializers.SerializerMethodField()
   longtitude = serializers.SerializerMethodField()
+  photos = serializers.SerializerMethodField()
+  pictures = serializers.SerializerMethodField()
 
   def get_company_id(self,obj):
     return obj.company.company_id
@@ -29,19 +33,37 @@ class AlertGroupSerializer(serializers.ModelSerializer):
   def get_longtitude(self, obj):
     return obj.panel.longtitude
   
+  def get_photos(self, obj):
+    photos = []
+    panel = obj.company_id.split('#', 1)[0]
+    for i in range(1,10):
+      if os.path.isfile(f'{IMAGE_PATCH}/Photos/{panel}_f{i}.jpg'):
+        path = {'url': f'/Photos/{panel}_f{i}.jpg'}
+        photos.append(path)
+    return photos
+  
+  def get_pictures(self, obj):
+    pictures = []
+    panel = obj.company_id.split('#', 1)[0]
+    for char in "abcdefghi":
+      if os.path.isfile(f'{IMAGE_PATCH}/Pictures/{panel}_{obj.group_field}_{char}.jpg'):
+        path = {'url': f'/Pictures/{panel}_{obj.group_field}_{char}.jpg'}
+        pictures.append(path)
+    return pictures
+  
   class Meta:
     model = Groups
-    fields = ('company_id', 'group_field', 'companyname', 'address', 'latitude', 'longtitude', 'operatorprompt')
+    fields = ('company_id', 'group_field', 'companyname', 'address', 'latitude', 'longtitude', 'operatorprompt', 'photos', 'pictures')
     
 class ListCompanySerializer(serializers.ModelSerializer):
   test = serializers.SerializerMethodField()
   disabled = serializers.SerializerMethodField()
   
   def get_test(self, obj):
-    return Panel.objects.get(panel_id = obj.company_id.split('#', 1)[0]).testpanel
+    return Panel.objects.using('pult4db').get(panel_id = obj.company_id.split('#', 1)[0]).testpanel
   
   def get_disabled(self, obj):
-    return Panel.objects.get(panel_id = obj.company_id.split('#', 1)[0]).disabled
+    return Panel.objects.using('pult4db').get(panel_id = obj.company_id.split('#', 1)[0]).disabled
 
   class Meta:
     model = Company
@@ -51,6 +73,7 @@ class DetailCompanyMinSerializer(serializers.ModelSerializer):
   latitude = serializers.SerializerMethodField()
   longtitude = serializers.SerializerMethodField()
   operatorprompt = serializers.SerializerMethodField()
+  photos = serializers.SerializerMethodField()
 
   def get_latitude(self, obj):
     return Panel.objects.using('pult4db').get(panel_id = obj.company_id.split('#', 1)[0]).latitude
@@ -61,9 +84,18 @@ class DetailCompanyMinSerializer(serializers.ModelSerializer):
   def get_operatorprompt(self, obj):
     return Groups.objects.using('pult4db').get(panel = obj.company_id.split('#', 1)[0], group_field = obj.company_id.split('#', 1)[1]).operatorprompt
   
+  def get_photos(self, obj):
+    photos = []
+    panel = obj.company_id.split('#', 1)[0]
+    for i in range(1,10):
+      if os.path.isfile(f'{IMAGE_PATCH}/Photos/{panel}_f{i}.jpg'):
+        path = {'url': f'/Photos/{panel}_f{i}.jpg'}
+        photos.append(path)
+    return photos
+  
   class Meta:
     model = Company
-    fields = ('company_id', 'companyname', 'address', 'latitude', 'longtitude', 'operatorprompt')
+    fields = ('company_id', 'companyname', 'address', 'latitude', 'longtitude', 'operatorprompt', 'photos')
 
 class ListGroupResponseSerializer(serializers.ModelSerializer):
   company = serializers.SerializerMethodField()
@@ -78,8 +110,9 @@ class ListGroupResponseSerializer(serializers.ModelSerializer):
   
   def get_message(self, obj):
     if obj.group_field:
-      group = Groups.objects.using('pult4db').get(panel = obj.panel_id, group_field = obj.group_field)
-      return group.message
+      groups = Groups.objects.using('pult4db').filter(panel = obj.panel_id, group_field = obj.group_field)
+      if len(groups) > 0:
+        return groups[0].message
     return ''
   
   def get_event(self, obj):
