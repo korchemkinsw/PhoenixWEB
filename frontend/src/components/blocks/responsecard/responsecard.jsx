@@ -42,7 +42,9 @@ export default function ResponseCard ({company}) {
           <p>
             <span>Координаты:</span>
             <span>{company.latitude} {company.longtitude}</span>
-            <button onClick={() => handleCopy(`${company.latitude} ${company.longtitude}`)}>copyGPS</button>
+            <CopyToClipboard text={`${company.latitude} ${company.longtitude}`} onCopy={onCopyText}>
+              <button style={{'margin-left':'10px'}}>copyGPS</button>
+            </CopyToClipboard>
           </p>
         }
       </StyledGPS>
