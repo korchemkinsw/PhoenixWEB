@@ -8,7 +8,7 @@ export default function Images ({images}) {
     <StyledImageBlock>
       {
         images && images.length && images.map((image, index) =>(
-          <img src={image.url} alt={`Photo${index}`} width="200" height="200" onClick={() => setUrl(image.url)}/>
+          <img src={image.url} alt={`Photo${index}`} width="100" height="100" onClick={() => setUrl(image.url)}/>
         ))
       }
       {

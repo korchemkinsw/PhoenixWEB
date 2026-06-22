@@ -10,12 +10,20 @@ export const StyledImageBlock = styled.div`
 
 export const StyledBigImage = styled.div`
   position: absolute;
+  top: 0;
+  left: 0;
+  background-color: ivory;
+  img {
+    width: 100vw;
+    height: 100vh;
+    object-fit: contain;
+  }
   button {
     position: absolute;
     top: 0;
     right: 0;
-    width: 60px;
-    height: 60px;
-    font-size: 40px;
+    width: 30px;
+    height: 30px;
+    font-size: 24px;
   }
 `

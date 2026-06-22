@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ResponseCard from "/src/components/blocks/responsecard/responsecard";
-import { StyledWrapper, StyledTeamBlock, StyledText, StyledAlarmBlock } from "./styles";
+import { StyledWrapper, StyledTeamBlock, StyledText, StyledAlarmBlock, StyledBlockHead, StyledBlockText } from "./styles";
 
 export default function ResponseTeam ({responseteam}) {
   return (
@@ -10,22 +10,22 @@ export default function ResponseTeam ({responseteam}) {
         {
           responseteam.panel_id ? (
             <StyledAlarmBlock>
-              <h3>ТРЕВОГА</h3>
-              <p><span>объект: </span>{responseteam.panel_id}</p>
+              <StyledBlockHead>ТРЕВОГА</StyledBlockHead>
+              <StyledBlockText><span>объект: </span>{responseteam.panel_id}</StyledBlockText>
               {
                 responseteam.message && responseteam.message.length &&
-                <p><span>раздел: </span>{responseteam.message}</p>
+                <StyledBlockText><span>раздел: </span>{responseteam.message}</StyledBlockText>
               }
               {
                 responseteam.event && responseteam.event.length &&
-                <p><span>событие: {responseteam.event}</span></p>
+                <StyledBlockText><span>событие: {responseteam.event}</span></StyledBlockText>
               }
             </StyledAlarmBlock>
           ) : 
-          <p>Если ничего нет - обнови страницу или группа не отправлена в ПО "Phoenix"</p>
+          <StyledBlockText>Если ничего нет - обнови страницу или группа не отправлена в ПО "Phoenix"</StyledBlockText>
         }
       </StyledTeamBlock>
-      {responseteam.company.company_id && <h3>Карточка объекта</h3>}
+      {responseteam.company.company_id && <StyledBlockHead>Карточка объекта</StyledBlockHead>}
       {responseteam.company && <ResponseCard company = {responseteam.company} />}
     </StyledWrapper>
   )

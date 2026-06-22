@@ -1,9 +1,10 @@
 import styled from "styled-components";
 
 export const StyledWrapper = styled.section`
-  width: 740px;
-  height: 130vh;
-  margin-top: 40px;
+  width: 360px;
+  height: 100vh;
+  margin-top: 20px;
+  margin-bottom: 20px;
   margin-left: auto;
   margin-right: auto;
   font-size: 24px;

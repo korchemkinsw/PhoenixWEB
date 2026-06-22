@@ -6,47 +6,40 @@ export const StyledResponseCard = styled.div`
   height:auto;
   margin-left: auto;
   margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  line-height: 20px;
+`
+
+export const StyledCardHead = styled.div`
   display: grid;
-  grid-template-areas:
-      "account account company company company company"
-      "address address address address address address"
-      "gps gps gps gps gps gps"
-      "head-inf head-inf head-inf head-inf head-inf head-inf"
-      "info info info info info info"
-      "head-photo head-photo head-photo head-photo head-photo head-photo"
-      "photos photos photos photos photos photos"
-      "head-pictures head-pictures head-pictures head-pictures head-pictures head-pictures"
-      "pictures pictures pictures pictures pictures pictures"
+  grid-template-columns: 110px auto;
 `
 
 export const StyledAccount = styled.p`
-  grid-area: account;
-  font-size: 48px;
+  font-size: 28px;
   font-weight: bold;
   margin: auto;
-  width: 180px;
-  line-height: 60px;
+  width: 100px;
+  line-height: 30px;
   text-align: center;
 `
 
 export const StyledCompany = styled.p`
-  grid-area: company;
-  font-size: 36px;
   font-weight: bold;
-  margin: 0;
-  line-height: 60px;
+  margin-top: auto;
+  margin-bottom: auto;
 `
 
 export const StyledAddress = styled.p`
-  grid-area: address;
-  font-size: 32px;
   display: block;
   margin: 0;
-  line-height: 30px;
+  grid-column: 1/3;
 `
 
 export const StyledGPS = styled.p`
-  grid-area: gps;
+  margin: 0;
   margin-left: auto;
   margin-right: auto;
   display: flex;
@@ -54,35 +47,36 @@ export const StyledGPS = styled.p`
   p {
     display: flex;
     gap: 10px;
-    font-size: 28px;
+    span {
+      margin-top: auto;
+      margin-bottom: auto;
+    }
     span:nth-of-type(1) {
       font-weight: bold;
     }
   }
   button {
-    width: 62px;
-    height: 32px;
+    width: 80px;
+    height: 40px;
+    margin-top: auto;
+    margin-bottom: auto;
   }
 `
 
 export const StyledHeadInfo = styled.p`
-  grid-area: head-inf;
   font-weight: bold;
   button {
-    width: 62px;
-    height: 32px;
+    width: 80px;
+    height: 40px;
+    margin-top: auto;
+    margin-bottom: auto;
   }
 `
 
 export const StyledInfo = styled.textarea`
-  grid-area: info;
-  grid-area: info;
-  resize: none;
-  font-size: 28px;
-  height: 250px;
+  height: 120px;
 `
 
 export const StyledHeadPhoto = styled.p`
-  grid-area: head-photo;
   font-weight: bold;
 `

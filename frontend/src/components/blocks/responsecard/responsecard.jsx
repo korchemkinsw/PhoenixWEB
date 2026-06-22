@@ -3,6 +3,7 @@ import { CopyToClipboard } from 'react-copy-to-clipboard';
 import Images from "/src/components/blocks/images/images";
 import { 
   StyledResponseCard,
+  StyledCardHead,
   StyledAccount, 
   StyledCompany, 
   StyledAddress,
@@ -33,14 +34,16 @@ export default function ResponseCard ({company}) {
   return (
     company.company_id && 
     <StyledResponseCard>
-      <StyledAccount>{company.company_id.split('#',1)[0]}</StyledAccount>
-      <StyledCompany>{company.companyname}</StyledCompany>
-      <StyledAddress>{company.address}</StyledAddress>
+      <StyledCardHead>
+        <StyledAccount>{company.company_id.split('#',1)[0]}</StyledAccount>
+        <StyledCompany>{company.companyname}</StyledCompany>
+        <StyledAddress>{company.address}</StyledAddress>
+      </StyledCardHead>
       <StyledGPS>
         {
           company.latitude && company.longtitude && 
           <p>
-            <span>Координаты:</span>
+            <span>GPS:</span>
             <span>{company.latitude} {company.longtitude}</span>
             <CopyToClipboard text={`${company.latitude} ${company.longtitude}`} onCopy={onCopyText}>
               <button style={{'margin-left':'10px'}}>copyGPS</button>
