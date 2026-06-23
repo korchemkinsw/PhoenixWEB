@@ -120,10 +120,13 @@ class ListGroupResponseSerializer(serializers.ModelSerializer):
     Events = get_archive_model(date_stamp)
     event = Events.objects.filter(event_id = obj.event_id).first()
     if event != None:
-      codes = Code.objects.using('pult4db').filter(codegroup = 1).filter(code = event.code) #filter(codegroup = 1).
+      codes = Code.objects.using('pult4db').filter(code = event.code) #filter(codegroup = 1).
       if (len(codes) != 0):
         code = codes[0].message
-        zone = Zones.objects.using('pult4db').get(panel = event.panel_id, group_field = event.group_field, zone = event.zone).message
+        zone = Zones.objects.using('pult4db').filter(panel = event.panel_id, group_field = event.group_field, zone = event.zone)
+        if len(zone) > 0:
+          zone = zone[0].message
+        print(zone)
         if str(codes[0].code)[:1] != 'E' or len(zone) < 2:
           return code
         return zone
